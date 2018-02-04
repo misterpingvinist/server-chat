@@ -6,4 +6,5 @@
   </v-toolbar>
 </template>
 
-<script lang="ts" src="./Toolbar.ts"></script>
+<script lang="ts" src="./Toolbar.ts">
+</script>

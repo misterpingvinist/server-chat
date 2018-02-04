@@ -40,10 +40,11 @@
   </v-app>
 </template>
 
-<script lang="ts" src="./App.ts"></script>
+<script lang="ts" src="./App.ts">
+</script>
 
 <style>
-#messages{
+#messages {
   overflow: auto;
   height: 100%;
   padding-bottom: 10px;

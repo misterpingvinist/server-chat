@@ -8,4 +8,5 @@
   </v-layout>
 </template>
 
-<script lang="ts" src="./Message.ts"></script>
+<script lang="ts" src="./Message.ts">
+</script>

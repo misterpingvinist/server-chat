@@ -7,8 +7,19 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "target": "es5",
-    "experimentalDecorators": true,
-    "interface-name": [true, "never-prefix"]
+    "experimentalDecorators": true
   },
-  "include": ["./src/**/*"]
+  "types": [
+    "mocha"
+ ],
+ "typeRoots": [
+   "./node_modules/@types"
+ ],
+  "include": [
+    "src/**/*"
+],
+"exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+]
 }

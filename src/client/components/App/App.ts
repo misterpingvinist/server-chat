@@ -32,8 +32,8 @@ interface Avatars {
   components: {
     MessageVue,
     SignForm,
-    Toolbar
-  }
+    Toolbar,
+  },
 })
 export default class App extends Vue {
   private name: string = "App";
@@ -51,10 +51,10 @@ export default class App extends Vue {
   constructor() {
     super();
     this.users = [];
-    this.socket.on("chat_message", val => {
+    this.socket.on("chat_message", (val) => {
       this.messages.push(val);
     });
-    this.socket.on("sign", val => {
+    this.socket.on("sign", (val) => {
       this.setUsers(val);
     });
   }
@@ -77,7 +77,7 @@ export default class App extends Vue {
         this.drawer === null || this.drawer === false ? "10px" : "160px",
 
       position: "fixed",
-      width: "100%"
+      width: "100%",
     };
   }
 
@@ -96,7 +96,7 @@ export default class App extends Vue {
       this.nick = nick;
       this.socket.emit("sign", {
         ava: this.ava,
-        title: nick
+        title: nick,
       });
     }
   }
@@ -105,7 +105,7 @@ export default class App extends Vue {
       this.socket.emit("chat_message", {
         ava: this.ava,
         text: this.message,
-        title: this.nick
+        title: this.nick,
       });
       this.message = "";
     }

@@ -30,7 +30,7 @@ export class Chat {
       a: ["href", "name", "target"],
       // We don't currently allow img itself by default, but this
       // would make sense if we did
-      img: ["src"]
+      img: ["src"],
     },
     allowedSchemes: ["http", "https", "ftp", "mailto"],
     allowedTags: [
@@ -61,7 +61,7 @@ export class Chat {
       "tr",
       "th",
       "td",
-      "pre"
+      "pre",
     ],
 
     // Lots of these won't come up by default because we don't allow them
@@ -74,13 +74,13 @@ export class Chat {
       "basefont",
       "input",
       "link",
-      "meta"
+      "meta",
     ],
     // URL schemes we permit
 
     allowedSchemesByTag: {},
 
-    allowProtocolRelative: true
+    allowProtocolRelative: true,
   };
 
   constructor() {
@@ -96,25 +96,25 @@ export class Chat {
             this.connection.splice(index, 1);
           }
         }
-        this.io.emit("sign", this.connection.map(x => x.name));
+        this.io.emit("sign", this.connection.map((x) => x.name));
       });
 
-      socket.on("chat_message", (msg: IMessage): void => {
+      socket.on("chat_message", (msg: Message): void => {
         this.io.emit("chat_message", {
           ava: msg.ava,
           text: sanitizeHtml(msg.text, this.optionsHtml),
-          title: msg.title
+          title: msg.title,
         });
       });
 
-      socket.on("sign", (msg: IMessage): void => {
+      socket.on("sign", (msg: Message): void => {
         const title = sanitizeHtml(msg.title, this.optionsHtml);
         const ava = sanitizeHtml(msg.ava, this.optionsHtml);
         this.connection.push({
           name: { ava, title },
-          socket
+          socket,
         });
-        this.io.emit("sign", this.connection.map(x => x.name));
+        this.io.emit("sign", this.connection.map((x) => x.name));
       });
     });
     this.server.listen(3000);
@@ -131,7 +131,7 @@ export class Chat {
   private createIO(): SocketIO.Server {
     return socketIo(this.server, {
       pingInterval: 20000,
-      pingTimeout: 50000
+      pingTimeout: 50000,
     });
   }
 }
