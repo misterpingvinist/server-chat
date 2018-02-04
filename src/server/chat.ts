@@ -4,24 +4,24 @@ import * as serve from "koa-static";
 import * as sanitizeHtml from "sanitize-html";
 import * as socketIo from "socket.io";
 
-interface ISocketName {
+interface SocketName {
   ava: string;
   title: string;
 }
 
-interface IMessage {
+interface Message {
   ava: string;
   title: string;
   text: string;
 }
 
-interface ISocket {
+interface Socket {
   socket: SocketIO.Socket;
-  name: ISocketName;
+  name: SocketName;
 }
 
 export class Chat {
-  public connection: ISocket[] = [];
+  public connection: Socket[] = [];
   private app: Koa;
   private server: http.Server;
   private io: SocketIO.Server;
@@ -84,9 +84,9 @@ export class Chat {
   };
 
   constructor() {
-    this.createApp("./dist");
-    this.createServer();
-    this.createIO();
+    this.app = this.createApp("./dist");
+    this.server = this.createServer();
+    this.io = this.createIO();
   }
   public listen(port: number): void {
     this.io.on("connection", (socket: SocketIO.Socket): void => {
@@ -119,16 +119,17 @@ export class Chat {
     });
     this.server.listen(3000);
   }
-  private createApp(path: string): void {
-    this.app = new Koa();
-    this.app.use(serve(path));
+  private createApp(path: string): Koa {
+    const app = new Koa();
+    app.use(serve(path));
+    return app;
   }
 
-  private createServer(): void {
-    this.server = http.createServer(this.app.callback());
+  private createServer(): http.Server {
+    return http.createServer(this.app.callback());
   }
-  private createIO(): void {
-    this.io = socketIo(this.server, {
+  private createIO(): SocketIO.Server {
+    return socketIo(this.server, {
       pingInterval: 20000,
       pingTimeout: 50000
     });

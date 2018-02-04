@@ -1,17 +1,22 @@
 {
   "name": "vue-type-chat",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/client/index.ts",
   "license": "MIT",
   "scripts": {
     "build-d": "webpack --config build/webpack.config.dev.js",
     "build-s": "tsc -p src/server/server.ts",
+    "type" : "vuetype src/components",
+    "dev": "webpack-dev-server --hot --inline --config build/webpack.config.dev.js",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "precommit": "lint-staged ",
-    "pret": "prettier --write"
+    "precommit": "lint-staged --debug ",
+    "pret": "prettier"
   },
   "lint-staged": {
-    "*.{js,ts,json,css,md}": ["prettier --write", "git add"]
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@types/node": "^9.4.0",
@@ -26,13 +31,27 @@
     "@types/koa-static": "^4.0.0",
     "@types/sanitize-html": "^1.14.0",
     "@types/socket.io": "^1.4.31",
+    "@types/socket.io-client": "^1.4.32",
     "awesome-typescript-loader": "^3.4.1",
+    "css-loader": "^0.28.9",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
     "koa": "^2.4.1",
     "koa-static": "^4.0.2",
     "sanitize-html": "^1.17.0",
     "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "style-loader": "^0.20.1",
+    "ts-loader": "^3.4.0",
     "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.7.0"
+    "tslint-config-prettier": "^1.7.0",
+    "vue": "^2.5.13",
+    "vue-class-component": "^6.1.2",
+    "vue-loader": "^14.1.1",
+    "vue-socket-io": "^0.3.2",
+    "vue-socket.io": "^2.1.1-b",
+    "vue-template-compiler": "^2.5.13",
+    "vuetify": "^0.17.7",
+    "vuetype": "^0.2.2"
   }
 }
