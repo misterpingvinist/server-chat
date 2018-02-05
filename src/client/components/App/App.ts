@@ -1,8 +1,8 @@
 import * as io from "socket.io-client";
 import Vue from "vue";
 import Component from "vue-class-component";
+import config from "../../../config";
 import avatars from "../../data/avatars";
-
 import MessageVue from "../Message/Message.vue";
 import SignForm from "../SignForm/SignForm.vue";
 import Toolbar from "../Toolbar/Toolbar.vue";
@@ -32,17 +32,17 @@ interface Avatars {
   components: {
     MessageVue,
     SignForm,
-    Toolbar,
-  },
+    Toolbar
+  }
 })
 export default class App extends Vue {
   private name: string = "App";
   private drawer: boolean = document.body.clientWidth > 1250 ? true : false;
   private nick: string = "";
 
-  private ava: string = "https://";
+  private ava: string = "";
   private message: string = "";
-  private socket = io("http://localhost:3000");
+  private socket = io(`${config.address}:${config.port}`);
   private ok: boolean = false;
   private users: User[];
   private images: Avatars[] = avatars.ava;
@@ -51,10 +51,10 @@ export default class App extends Vue {
   constructor() {
     super();
     this.users = [];
-    this.socket.on("chat_message", (val) => {
+    this.socket.on("chat_message", val => {
       this.messages.push(val);
     });
-    this.socket.on("sign", (val) => {
+    this.socket.on("sign", val => {
       this.setUsers(val);
     });
   }
@@ -77,7 +77,7 @@ export default class App extends Vue {
         this.drawer === null || this.drawer === false ? "10px" : "160px",
 
       position: "fixed",
-      width: "100%",
+      width: "100%"
     };
   }
 
@@ -91,12 +91,12 @@ export default class App extends Vue {
         const item = this.images[
           Math.floor(Math.random() * this.images.length)
         ];
-        this.ava = `https://picsum.photos/${item.filename}`;
+        this.ava = `${config.ava_url}${item.filename}`;
       }
       this.nick = nick;
       this.socket.emit("sign", {
         ava: this.ava,
-        title: nick,
+        title: nick
       });
     }
   }
@@ -105,7 +105,7 @@ export default class App extends Vue {
       this.socket.emit("chat_message", {
         ava: this.ava,
         text: this.message,
-        title: this.nick,
+        title: this.nick
       });
       this.message = "";
     }

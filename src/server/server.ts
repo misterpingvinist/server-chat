@@ -1,6 +1,6 @@
+import config from "../config";
 import { Chat } from "./chat";
-
 const app = new Chat();
-app.listen(3000);
+app.listen(config.port);
 
 export default app;

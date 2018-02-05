@@ -3,7 +3,6 @@ import * as Koa from "koa";
 import * as serve from "koa-static";
 import * as sanitizeHtml from "sanitize-html";
 import * as socketIo from "socket.io";
-
 interface SocketName {
   ava: string;
   title: string;
@@ -118,7 +117,7 @@ export class Chat {
         this.io.emit("sign", this.connection.map(x => x.name));
       });
     });
-    this.server.listen(3000);
+    this.server.listen(port);
   }
   private createApp(path: string): Koa {
     const app = new Koa();
