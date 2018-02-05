@@ -1,7 +1,7 @@
-const path = require("path")
-const htmlplugin = require("html-webpack-plugin")
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const path = require("path");
+const htmlplugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: path.resolve(__dirname, "..", "src", "client", "index.ts"),
   module: {
@@ -42,4 +42,4 @@ module.exports = {
     }),
     new ExtractTextPlugin("style.css")
   ]
-}
+};

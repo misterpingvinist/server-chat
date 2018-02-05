@@ -22,15 +22,16 @@ interface Socket {
 
 export class Chat {
   public connection: Socket[] = [];
+  public server: http.Server;
   private app: Koa;
-  private server: http.Server;
+
   private io: SocketIO.Server;
   private optionsHtml: sanitizeHtml.IOptions = {
     allowedAttributes: {
       a: ["href", "name", "target"],
       // We don't currently allow img itself by default, but this
       // would make sense if we did
-      img: ["src"],
+      img: ["src"]
     },
     allowedSchemes: ["http", "https", "ftp", "mailto"],
     allowedTags: [
@@ -61,7 +62,7 @@ export class Chat {
       "tr",
       "th",
       "td",
-      "pre",
+      "pre"
     ],
 
     // Lots of these won't come up by default because we don't allow them
@@ -74,17 +75,17 @@ export class Chat {
       "basefont",
       "input",
       "link",
-      "meta",
+      "meta"
     ],
     // URL schemes we permit
 
     allowedSchemesByTag: {},
 
-    allowProtocolRelative: true,
+    allowProtocolRelative: true
   };
 
   constructor() {
-    this.app = this.createApp("./dist");
+    this.app = this.createApp("./client");
     this.server = this.createServer();
     this.io = this.createIO();
   }
@@ -96,14 +97,14 @@ export class Chat {
             this.connection.splice(index, 1);
           }
         }
-        this.io.emit("sign", this.connection.map((x) => x.name));
+        this.io.emit("sign", this.connection.map(x => x.name));
       });
 
       socket.on("chat_message", (msg: Message): void => {
         this.io.emit("chat_message", {
           ava: msg.ava,
           text: sanitizeHtml(msg.text, this.optionsHtml),
-          title: msg.title,
+          title: msg.title
         });
       });
 
@@ -112,9 +113,9 @@ export class Chat {
         const ava = sanitizeHtml(msg.ava, this.optionsHtml);
         this.connection.push({
           name: { ava, title },
-          socket,
+          socket
         });
-        this.io.emit("sign", this.connection.map((x) => x.name));
+        this.io.emit("sign", this.connection.map(x => x.name));
       });
     });
     this.server.listen(3000);
@@ -131,7 +132,7 @@ export class Chat {
   private createIO(): SocketIO.Server {
     return socketIo(this.server, {
       pingInterval: 20000,
-      pingTimeout: 50000,
+      pingTimeout: 50000
     });
   }
 }
