@@ -18,7 +18,7 @@
     <v-content>
       <v-container fluid fill-height style="flex-direction:column">
         <SignForm v-if="!ok" :greet="greet" />
-                 <v-flex id="messages" v-if="ok" d-flex style="flex:4;width:100%">
+           <v-flex id="messages" v-if="ok" d-flex style="flex:4;width:100%">
            <ul>
             <li v-for="message in messages" style="line-height: 1;" :key="message.text">
                <MessageVue :ava="message.ava" :title="message.title" :text="message.text"/>
@@ -33,7 +33,7 @@
               v-model="message"
               @keyup.enter.native="send"
             ></v-text-field>
-            <v-btn fab @click="send"><v-icon>chat</v-icon></v-btn>
+            <v-btn style="height:56px;width:56px;" fab @click="send"><v-icon>chat</v-icon></v-btn>
         </v-flex>
       </v-container>
     </v-content>

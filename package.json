@@ -8,12 +8,16 @@
     "build-s": "tsc src/server/server.ts --outDir ./dist/",
     "build": "yarn run build-d && yarn run build-s",
     "type": "vuetype src/components",
-    "dev":
-      "webpack-dev-server --hot --inline --config build/webpack.config.dev.js",
+    "dev": "webpack-dev-server --hot --inline --config build/webpack.config.dev.js",
     "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "nyc": {
-    "reporter": ["html", "lcov", "text", "text-summary"],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
     "report-dir": "dist/reports/coverage"
   },
   "devDependencies": {
@@ -46,6 +50,7 @@
     "vue": "^2.5.13",
     "vue-class-component": "^6.1.2",
     "vue-loader": "^14.1.1",
+    "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.5.13",
     "vuetify": "^0.17.7"
   }

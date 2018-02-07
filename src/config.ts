@@ -1,5 +1,5 @@
 export default {
-  address: "http://localhost",
+  address: "localhost",
   ava_url: "https://picsum.photos/",
-  port: 3000
+  port: 3000,
 };

@@ -3,7 +3,6 @@ export default Vue.extend({
   data: () => ({
     ava: "https://",
     nick: "",
-
     rules: {
       size: (value) => {
         return value.length <= 15 || "Invalid size.";

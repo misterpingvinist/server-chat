@@ -7,14 +7,10 @@ import MessageVue from "../Message/Message.vue";
 import SignForm from "../SignForm/SignForm.vue";
 import Toolbar from "../Toolbar/Toolbar.vue";
 
-interface User {
+interface UserOrMessage {
   ava: string;
   title: string;
-}
-
-interface Message {
-  ava: string;
-  title: string;
+  text?: string;
 }
 
 interface Avatars {
@@ -32,29 +28,28 @@ interface Avatars {
   components: {
     MessageVue,
     SignForm,
-    Toolbar
-  }
+    Toolbar,
+  },
 })
 export default class App extends Vue {
   private name: string = "App";
   private drawer: boolean = document.body.clientWidth > 1250 ? true : false;
   private nick: string = "";
-
   private ava: string = "";
   private message: string = "";
-  private socket = io(`${config.address}:${config.port}`);
+  private socket = io(`${config.address}:3000`);
   private ok: boolean = false;
-  private users: User[];
+  private users: UserOrMessage[];
   private images: Avatars[] = avatars.ava;
   private $socket: any;
-  private messages: Message[] = [];
+  private messages: UserOrMessage[] = [];
   constructor() {
     super();
     this.users = [];
-    this.socket.on("chat_message", val => {
+    this.socket.on("chat_message", (val) => {
       this.messages.push(val);
     });
-    this.socket.on("sign", val => {
+    this.socket.on("sign", (val) => {
       this.setUsers(val);
     });
   }
@@ -75,9 +70,8 @@ export default class App extends Vue {
       height: "100px",
       paddingLeft:
         this.drawer === null || this.drawer === false ? "10px" : "160px",
-
       position: "fixed",
-      width: "100%"
+      width: "100%",
     };
   }
 
@@ -96,7 +90,7 @@ export default class App extends Vue {
       this.nick = nick;
       this.socket.emit("sign", {
         ava: this.ava,
-        title: nick
+        title: nick,
       });
     }
   }
@@ -105,7 +99,7 @@ export default class App extends Vue {
       this.socket.emit("chat_message", {
         ava: this.ava,
         text: this.message,
-        title: this.nick
+        title: this.nick,
       });
       this.message = "";
     }
